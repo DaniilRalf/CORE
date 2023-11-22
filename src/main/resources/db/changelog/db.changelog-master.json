@@ -1,0 +1,29 @@
+{
+    "databaseChangeLog": [
+        {
+            "changeSet": {
+                "id": "1",
+                "author": "Daniil Raigerd",
+                "changes": [
+                    {
+                        "createTable": {
+                            "columns": [
+                                {
+                                    "column": {
+                                        "name": "test_column",
+                                        "type": "INT",
+                                        "constraints":
+                                        {
+                                            "primaryKey": true,
+                                            "nullable": false
+                                        }
+                                    }
+                                }
+                            ],
+                            "tableName": "test_table"
+                        }
+                    }
+                ]
+            }
+        }]
+}
