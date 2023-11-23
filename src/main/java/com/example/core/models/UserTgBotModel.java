@@ -2,7 +2,7 @@ package com.example.core.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.antlr.v4.runtime.misc.NotNull;
+
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -12,29 +12,22 @@ import java.util.UUID;
 public class UserTgBotModel {
 
     @Id
-    @GeneratedValue
-    @NotNull
-    @Column(name = "uuid")
+    @Column(name = "uuid", nullable = false)
     private UUID uuid;
 
-    @NotNull
-    @Column(name = "index")
+    @Column(name = "index", nullable = false)
     private Long index;
 
-    @NotNull
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    @NotNull
-    @Column(name = "create_at")
+    @Column(name = "create_at", nullable = false)
     private Timestamp createdAt;
 
-    @NotNull
-    @Column(name = "update_at")
+    @Column(name = "update_at", nullable = false)
     private Timestamp updatedAt;
 
-    @NotNull
-    @Column(name = "specification_uuid")
+    @Column(name = "specification_uuid", nullable = false)
     private UUID specificationUuid;
 
 }

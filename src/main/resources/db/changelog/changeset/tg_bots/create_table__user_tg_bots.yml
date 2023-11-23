@@ -11,6 +11,7 @@ databaseChangeLog:
                   name: uuid
                   type: uuid
                   constraints:
+
                     primaryKey: true
                     primaryKeyName: user_tg_bots_pk
                     nullable: false
