@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table__specification_bots
+      author: Daniil Raigerd
+      changes:
+        - createTable:
+            tableName: specification_tg_bots
+            columns:
+              - column:
+                  name: uuid
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: specification_tg_bots_pk
+                    nullable: false
+              - column:
+                  name: name_bot
+                  type: clob
+                  constraints:
+                    nullable: false

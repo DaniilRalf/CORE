@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table__user_tg_bots
+      author: Daniil Raigerd
+      changes:
+
+        - createTable:
+            tableName: user_tg_bots
+            columns:
+              - column:
+                  name: uuid
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_tg_bots_pk
+                    nullable: false
+              - column:
+                  name: index
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: specification_uuid
+                  type: uuid
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: user_tg_bots
+            baseColumnNames: specification_uuid
+            constraintName: user_tg_bots__specification_tg_bots_fk
+            referencedTableName: specification_tg_bots
+            referencedColumnNames: uuid

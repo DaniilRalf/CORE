@@ -1,0 +1,5 @@
+"databaseChangeLog":
+  - include:
+        file: db/changelog/changeset/tg_bots/create_table__specification_tg_bots.yml
+  - include:
+      file: db/changelog/changeset/tg_bots/create_table__user_tg_bots.yml
