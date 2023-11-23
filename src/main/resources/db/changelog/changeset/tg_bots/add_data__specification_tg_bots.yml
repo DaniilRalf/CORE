@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_data_to_specification_tg_bots
+      author: Daniil Raigerd
+      changes:
+        - insert:
+            tableName: specification_tg_bots
+            columns:
+              - column:
+                  name: uuid
+                  value: 1fa1add2-3b45-6789-abcd-000000000001
+              - column:
+                  name: name_bot
+                  value: na_sodes
+        - insert:
+            tableName: specification_tg_bots
+            columns:
+              - column:
+                  name: uuid
+                  value: 1fa1add2-3b45-6789-abcd-000000000002
+              - column:
+                  name: name_bot
+                  value: crypto_pulse
