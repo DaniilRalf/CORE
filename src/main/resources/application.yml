@@ -14,3 +14,5 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yml
     enabled: true
+env:
+  auth_token: test
