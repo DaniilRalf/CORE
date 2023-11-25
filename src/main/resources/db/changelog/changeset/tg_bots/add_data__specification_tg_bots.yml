@@ -11,7 +11,7 @@ databaseChangeLog:
                   value: 1fa1add2-3b45-6789-abcd-000000000001
               - column:
                   name: name_bot
-                  value: na_sodes
+                  value: na_sobes
         - insert:
             tableName: specification_tg_bots
             columns:
