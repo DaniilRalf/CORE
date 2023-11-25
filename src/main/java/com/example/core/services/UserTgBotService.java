@@ -17,8 +17,14 @@ public class UserTgBotService {
 
     private final UserTgBotModelRepository userTgBotRepository;
 
-    public UserTgBotService(UserTgBotModelRepository userTgBotRepository) {
+    private final SpecificationTgBotService specificationTgBotService;
+
+    public UserTgBotService(
+            UserTgBotModelRepository userTgBotRepository,
+            SpecificationTgBotService specificationTgBotService
+    ) {
         this.userTgBotRepository = userTgBotRepository;
+        this.specificationTgBotService = specificationTgBotService;
     }
 
     public Optional<UserTgBotModel> findByIndex(Long index) {
@@ -28,6 +34,9 @@ public class UserTgBotService {
     public UserTgBotModel createUser(UserData userData) {
         /** find User by index */
         Optional<UserTgBotModel> existingUser = this.userTgBotRepository.findByIndex(userData.getIndex());
+        if (!this.specificationTgBotService.checkSpecification(userData.getBotName())) {
+            throw new MainException("bot not found", HttpStatus.NOT_FOUND.value());
+        }
         if (existingUser.isEmpty()) {
             /** create new User */
             Optional<UserTgBotModel> activeUser = this.userTgBotRepository.createUser(
@@ -44,11 +53,7 @@ public class UserTgBotService {
             existingUser.get().setIsActive(true);
             existingUser.get().setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
             this.userTgBotRepository.save(existingUser.get());
-
-
-            //TODO: сделать обработку ошибок, пользователь уже существует
-            throw new MainException("test error", HttpStatus.NOT_FOUND.value());
-//            return existingUser.get();
+            throw new MainException("user already exists, data has been updated", HttpStatus.ACCEPTED.value());
         }
     }
 }

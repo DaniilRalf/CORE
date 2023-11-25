@@ -5,12 +5,12 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ResponseErrorMessage {
+public class ResponseErrorData {
 
     private String message;
     private Integer code;
 
-    public ResponseErrorMessage(String message, Integer code) {
+    public ResponseErrorData(String message, Integer code) {
         this.message = message;
         this.code = code;
     }
