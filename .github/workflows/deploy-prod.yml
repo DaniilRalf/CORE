@@ -65,6 +65,6 @@ jobs:
           password: 'LVXK%VWwnp8Q'
           port: '22'
           script: |
-            cd core/src/target
+            cd ../../core/src/target
             screen -m -d java -jar core-0.0.1-SNAPSHOT.jar
             ls -al
