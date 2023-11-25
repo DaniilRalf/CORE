@@ -38,7 +38,7 @@ jobs:
           password: 'LVXK%VWwnp8Q'
           port: '22'
           script: |
-            cd ./core/src
+            cd ../../core/src
             if [ "$(ls -A)" ]; then
               sudo kill -9 $(sudo lsof -t -i:8000)
               sudo rm -r *
