@@ -1,9 +1,10 @@
 package com.example.core.services;
 
 import com.example.core.dto.UserData;
+import com.example.core.helpers.errorHandler.exceptions.MainException;
 import com.example.core.models.UserTgBotModel;
 import com.example.core.repositories.UserTgBotModelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -16,7 +17,6 @@ public class UserTgBotService {
 
     private final UserTgBotModelRepository userTgBotRepository;
 
-    @Autowired
     public UserTgBotService(UserTgBotModelRepository userTgBotRepository) {
         this.userTgBotRepository = userTgBotRepository;
     }
@@ -25,29 +25,30 @@ public class UserTgBotService {
         return this.userTgBotRepository.findByIndex(index);
     }
 
-//    public UserTgBotModel createUser(UserData userData) {
     public UserTgBotModel createUser(UserData userData) {
         /** find User by index */
         Optional<UserTgBotModel> existingUser = this.userTgBotRepository.findByIndex(userData.getIndex());
-        UserTgBotModel activeUser;
         if (existingUser.isEmpty()) {
             /** create new User */
-            activeUser = new UserTgBotModel();
-            activeUser.setUuid(UUID.randomUUID());
-            activeUser.setIndex(userData.getIndex());
-            activeUser.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-            activeUser.setSpecificationUuid(UUID.fromString("1fa1add2-3b45-6789-abcd-000000000002"));
+            Optional<UserTgBotModel> activeUser = this.userTgBotRepository.createUser(
+                    UUID.randomUUID(),
+                    userData.getIndex(),
+                    true,
+                    Timestamp.valueOf(LocalDateTime.now()),
+                    Timestamp.valueOf(LocalDateTime.now()),
+                    userData.getBotName()
+            );
+            return activeUser.get();
         } else {
-            activeUser = existingUser.get();
-            //TODO: сделать обработку ошибок, пользователь уже существует
-        }
-        activeUser.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        activeUser.setIsActive(true);
-        userTgBotRepository.save(activeUser);
-        System.out.println("========================");
-        System.out.println(activeUser);
-        System.out.println("========================");
+            /** update existing User */
+            existingUser.get().setIsActive(true);
+            existingUser.get().setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            this.userTgBotRepository.save(existingUser.get());
 
-        return activeUser;
+
+            //TODO: сделать обработку ошибок, пользователь уже существует
+            throw new MainException("test error", HttpStatus.NOT_FOUND.value());
+//            return existingUser.get();
+        }
     }
 }

@@ -13,4 +13,5 @@ public class UserData {
     private Boolean is_active;
     private Timestamp create_at;
     private Timestamp update_at;
+    private String botName;
 }
