@@ -1,0 +1,70 @@
+name: deploy-prod
+run-name: ${{ github.actor }} is deploy CORE to prod
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+jobs:
+  deploy-back:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'Set up JDK 17'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: 'show JAVA_version'
+        run: java -version
+
+      - name: 'install maven'
+        run: sudo apt install maven
+
+      - name: 'build jar file'
+        run: mvn package
+
+      - name: 'show structure'
+        run: ls -al
+
+      - name: 'delete old jar file'
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: '31.129.108.198'
+          username: 'root'
+          password: 'LVXK%VWwnp8Q'
+          port: '22'
+          script: |
+            cd ./core/src
+            if [ "$(ls -A)" ]; then
+              sudo kill -9 $(sudo lsof -t -i:8000)
+              sudo rm -r *
+            else
+              echo "No files found in the directory"
+            fi
+
+      - name: 'deploy jar file'
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: '31.129.108.198'
+          username: 'root'
+          password: 'LVXK%VWwnp8Q'
+          port: '22'
+          source: 'target/*.jar'
+          target: 'core/src'
+
+
+      - name: 'start-remote-command'
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: '31.129.108.198'
+          username: 'root'
+          password: 'LVXK%VWwnp8Q'
+          port: '22'
+          script: |
+            cd core/src/target
+            screen -m -d java -jar core-0.0.1-SNAPSHOT.jar
+            ls -al

@@ -18,4 +18,4 @@ spring:
 
 env:
   auth-token: 516b6972-5be0-42c9-9db1-b1f52ab570ee
-  not-active-days: 15
+  not-active-days: 30
