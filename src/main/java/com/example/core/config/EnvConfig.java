@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EnvConfig {
 
-    @Value("${env.auth_token}")
+    @Value("${env.auth-token}")
     private String authToken;
+
+    @Value("${env.not-active-days}")
+    private Integer notActiveDays;
 }

@@ -1,5 +1,6 @@
 server:
   port: 8000
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/core
@@ -14,5 +15,7 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yml
     enabled: true
+
 env:
-  auth_token: test
+  auth-token: 516b6972-5be0-42c9-9db1-b1f52ab570ee
+  not-active-days: 15
