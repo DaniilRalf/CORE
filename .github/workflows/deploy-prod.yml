@@ -54,7 +54,7 @@ jobs:
           password: 'LVXK%VWwnp8Q'
           port: '22'
           source: 'target/*.jar'
-          target: 'core/src'
+          target: './core/src'
 
 
       - name: 'start-remote-command'
